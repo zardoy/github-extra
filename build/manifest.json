@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "GitHub Extra",
+    "version": "0.0.1",
+    "description": "Some GitHub UI adjustiments, GitHub Refined Companion",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://github.com/*"
+            ],
+            "js": [
+                "injectGithub.js"
+            ]
+        }
+    ]
+}

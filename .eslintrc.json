@@ -1,0 +1,7 @@
+{
+    "extends": "zardoy",
+    "rules": {
+        "unicorn/prefer-dom-node-append": "off",
+        "@typescript-eslint/naming-convention": "off"
+    }
+}
