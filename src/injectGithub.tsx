@@ -44,7 +44,7 @@ const injectStyles = () => {
             position: sticky;
             top: 10px;
             margin-top: 10px;
-            height: calc(100vh - 10px);
+            max-height: calc(100vh - 10px);
             overflow: auto;
         }
         .github-extra-readme-toc a {
@@ -171,8 +171,11 @@ const injectReadmeToc = () => {
         if (prevHighlight) prevHighlight.style.fontWeight = ''
         const linkIndex = Array.prototype.indexOf.call(tocList.children, lastMutation.target)
         const oursLink = toc.children[linkIndex] as HTMLAnchorElement
-        //@ts-expect-error thats fine since extension is targeting chrome only
-        oursLink.scrollIntoViewIfNeeded(false)
+        // Avoid unecessary annoying scrolls
+        if (prevHighlight !== oursLink && document.querySelector('div#readme')!.getBoundingClientRect().top <= window.innerHeight)
+            //@ts-expect-error thats fine since extension is targeting chrome only
+            oursLink.scrollIntoViewIfNeeded(false)
+
         prevHighlight = oursLink
         oursLink.style.fontWeight = 'bold'
     })

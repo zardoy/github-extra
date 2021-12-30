@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "GitHub Extra",
-    "version": "0.0.1",
+    "version": null,
     "description": "Some GitHub UI adjustiments, GitHub Refined Companion",
     "background": {
         "service_worker": "background.js"
