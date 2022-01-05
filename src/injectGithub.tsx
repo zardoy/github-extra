@@ -137,7 +137,9 @@ const registerNewKeybinds = () => {
     window.addEventListener('keydown', listener)
 }
 
+let hasScrolled = false
 const injectReadmeToc = () => {
+    hasScrolled = false
     const CLASS = 'github-extra-readme-toc'
     const oldToc = document.querySelector(`.${CLASS}`)
     if (oldToc) oldToc.remove()
@@ -172,10 +174,15 @@ const injectReadmeToc = () => {
         const linkIndex = Array.prototype.indexOf.call(tocList.children, lastMutation.target)
         const oursLink = toc.children[linkIndex] as HTMLAnchorElement
         // Avoid unecessary annoying scrolls
-        if (prevHighlight !== oursLink && document.querySelector('div#readme')!.getBoundingClientRect().top <= window.innerHeight)
+        if (
+            prevHighlight !== oursLink &&
+            document.querySelector('div#readme')!.getBoundingClientRect().top <= window.innerHeight &&
+            (hasScrolled || linkIndex > 0)
+        )
             //@ts-expect-error thats fine since extension is targeting chrome only
             oursLink.scrollIntoViewIfNeeded(false)
 
+        if (linkIndex > 0) hasScrolled = true
         prevHighlight = oursLink
         oursLink.style.fontWeight = 'bold'
     })
