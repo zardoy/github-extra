@@ -14,16 +14,14 @@ await fs.promises.rm('./build', {
 await fs.promises.mkdir('./build')
 await fs.promises.copyFile('./src/manifest.json', './build/manifest.json')
 
-if (production) {
-    await modifyJsonFile('./build/manifest.json', {
-        ...(production
-            ? {
-                  background: undefined,
-              }
-            : {}),
-        version: (await readPackageJsonFile({ dir: '.' })).version,
-    })
-}
+await modifyJsonFile('./build/manifest.json', {
+    ...(production
+        ? {
+              background: undefined,
+          }
+        : {}),
+    version: (await readPackageJsonFile({ dir: '.' })).version,
+})
 
 await build({
     bundle: true,
