@@ -30,7 +30,7 @@ const injectStyles = () => {
             /* just playing with shadows */
             text-shadow: 0 0 10px currentColor;
         }
-        html[data-color-mode="dark"] a[href="https://github.com/"]
+        html[data-color-mode="dark"] a[href="https://github.com/"][aria-label~="Homepage"]
         {
             box-shadow: 0 0 10px white;
             border-radius: 50%;
@@ -119,7 +119,11 @@ const addFolderDelimiter = () => {
 
 const registerNewKeybinds = () => {
     const listener = (e: KeyboardEvent) => {
-        if (!document.querySelector('.repository-content .octicon-file')) return
+        if (
+            !document.querySelector('.repository-content .octicon-file') ||
+            (document.activeElement && ['input', 'textarea'].includes(document.activeElement.tagName.toLowerCase()))
+        )
+            return
         if (e.code === 'KeyP') {
             const pkg = findFile('package.json')
             console.log(pkg)
